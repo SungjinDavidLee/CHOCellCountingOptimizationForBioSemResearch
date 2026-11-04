@@ -268,11 +268,10 @@ GT 가 외곽선인지, calibration 세트 규격.
 | `docs/SINGLE_MODEL_TABLE.txt` | 단독 모델 성능표 (원문) |
 | `results/*.json` | 원시 측정 결과 (스윕 전조합, fold별 per-file 기록 포함) |
 | `results/montage_*.png` | FP/FN 오차 사례 크롭 |
-| `figures/en/` | 저널 투고용 영문 그림 6종 |
+| `figures/en/` | 영문 그림 6종 |
 | `figures/ko/` | 한글 그림 6종 |
 | `figures/examples/` | 적용 예시 — 모델 비교 격자 5장, 개별 30장, 파이프라인, 오차 사례 |
 
-데이터셋 원본(이미지·GT)은 라이선스 확인 전까지 포함하지 않았음.
 
 ## 라이선스
 
