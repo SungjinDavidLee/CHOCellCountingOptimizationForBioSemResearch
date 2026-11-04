@@ -10,7 +10,6 @@
    NPU 실측은 변환 후 협업사/실기에서만 측정 가능.
 """
 import os, sys, pathlib, json, time
-import pathlib
 import numpy as np
 import cv2
 import torch

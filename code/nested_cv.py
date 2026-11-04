@@ -10,8 +10,7 @@ fold k 의 테스트 데이터는 선택에 전혀 쓰이지 않으므로 완전
  바꾸지 않는 후처리 파라미터이고 k 의 데이터를 보지 않으므로 유효하다.
  이 점은 보고서에 그대로 명시한다.)
 """
-import os, sys, pathlib, json, collections
-import pathlib
+import sys, pathlib, json, collections
 import numpy as np
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 from config import ROOT, NFOLD

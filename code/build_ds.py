@@ -1,6 +1,5 @@
 """채운 인스턴스 라벨맵 -> YOLO-seg 타일 데이터셋 (5-fold)."""
 import os, sys, pathlib, json, shutil, random
-import pathlib
 import numpy as np
 import cv2
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))

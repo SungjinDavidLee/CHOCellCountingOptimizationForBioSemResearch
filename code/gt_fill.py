@@ -6,7 +6,6 @@
     dilate(k) -> hole-fill -> erode(k) 로 k 를 키우며 재시도
  3) 영상 경계에 걸친 세포는 경계를 벽으로 삼아 닫는다(패딩 후 flood).
 """
-import os
 import numpy as np
 import cv2
 

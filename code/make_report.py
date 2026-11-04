@@ -6,10 +6,8 @@
  - 미검증 항목은 그대로 '미검증'이라 쓴다.
 """
 import os, sys, pathlib, json
-import pathlib
-import numpy as np
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
-from config import ROOT, NFOLD
+from config import ROOT
 
 
 def load(p, default=None):
@@ -170,7 +168,6 @@ def main():
     A("[9] 오차 원인 분석")
     A("-" * 78)
     ea = load(f"{ROOT}/work/error_analysis.json", {})
-    es = load(f"{ROOT}/work/error_stats.json", [])
     if ea:
         A(f"  FN(미검출) {len(ea['fn'])}건 / FP(오검출) {len(ea['fp'])}건 (총 743 세포 기준)")
         A(f"  FN 중 영상 경계 접촉 : {sum(1 for r in ea['fn'] if r['border'])}건")

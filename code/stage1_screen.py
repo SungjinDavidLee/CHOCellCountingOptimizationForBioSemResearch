@@ -6,8 +6,6 @@
  - fold0 val 에서 고른 후처리값은 '홀드아웃에서 선택된' 값 -> 선택 편향 명시
 """
 import os, sys, pathlib, json, time, itertools, traceback
-import pathlib
-import numpy as np
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 from config import ROOT
 from train_yolo import train

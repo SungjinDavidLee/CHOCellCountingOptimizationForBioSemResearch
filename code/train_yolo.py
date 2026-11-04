@@ -4,8 +4,6 @@
 batch 는 모델 크기에 따라 VRAM 한계로 조정되나, 유효 배치는 동일하게 유지한다.
 """
 import os, sys, pathlib, json, time
-import pathlib
-import yaml
 from ultralytics import YOLO
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 from config import ROOT, IMGSZ

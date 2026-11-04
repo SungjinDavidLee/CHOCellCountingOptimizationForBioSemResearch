@@ -4,14 +4,13 @@
 영문에서는 %p 대신 pp 표기를 쓴다.
 """
 import os, sys, pathlib, json, argparse
-import pathlib
 import numpy as np
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import cv2
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
-from config import ROOT, IMD, GTD, INST
+from config import ROOT, IMD, INST
 
 L = {
     "ko": dict(
@@ -167,8 +166,8 @@ def fig_methods(t, out, rows):
     vals = [r[1] for r in rows]
     errs = [r[2] for r in rows]
     cols = ["#4C72B0" if v < .97 else "#55A868" for v in vals]
-    b = ax.bar(range(len(rows)), vals, yerr=errs, capsize=4, color=cols,
-               edgecolor="k", lw=.6)
+    ax.bar(range(len(rows)), vals, yerr=errs, capsize=4, color=cols,
+           edgecolor="k", lw=.6)
     ax.axhline(0.97, ls="--", c="r", lw=1.2, label=t["target"])
     ax.set_xticks(range(len(rows)))
     ax.set_xticklabels(names, rotation=20, ha="right", fontsize=8)
@@ -221,7 +220,6 @@ def main():
     s3b = json.load(open(f"{ROOT}/work/stage3b.json"))
     cvr = json.load(open(f"{ROOT}/work/cv_report.json"))
     best_tag = max(s3b, key=lambda k: s3b[k]["nested"]["count_acc"])
-    pf = s3b[best_tag]["nested"]["per_fold"]
     rows = []
     for k, v in cvr.items():
         rows.append((f"{k}\n(single, nested)", v["nested"]["count_acc"],
@@ -232,10 +230,6 @@ def main():
     fig_methods(t, f"{od}/fig3_methods.png", rows)
 
     # scatter/BA 는 per-file 기록이 있는 단일모델 결과로 생성
-    pfiles = []
-    for k, v in cvr.items():
-        for r in v["nested"]["per_fold"]:
-            pass
     s2 = json.load(open(f"{ROOT}/work/stage2_cv.json"))
     key = "yolo11s-seg"
     pf2 = [dict(per_file=s2[key]["folds"][str(i)]["per_file"]) for i in range(5)]

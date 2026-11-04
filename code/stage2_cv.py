@@ -9,8 +9,7 @@
 
 보고서에는 A 를 헤드라인으로, B 를 상한으로 명시한다.
 """
-import os, sys, pathlib, json, itertools, time
-import pathlib
+import os, sys, pathlib, json, itertools
 import numpy as np
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 from config import ROOT, NFOLD

@@ -6,8 +6,6 @@
 같은 표에 섞어 쓰되 등급 열을 반드시 둔다.
 """
 import os, sys, pathlib, json
-import pathlib
-import numpy as np
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 from config import ROOT
 

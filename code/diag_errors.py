@@ -7,11 +7,10 @@
  H4. 특정 파일에 오차가 집중 (디브리/초점)
 """
 import os, sys, pathlib, json, collections
-import pathlib
 import numpy as np, cv2
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 from config import ROOT, IMD, INST, TILE, tile_origins
-from evaluate import predict_image, merge_instances, match_f1
+from evaluate import predict_image, merge_instances
 
 KEY = "yolo11s-seg"
 
@@ -44,7 +43,7 @@ def main():
     print(f"   conf T: {c1[:6]}")
 
     # H2~H4: fold 전체 오차 위치 분석
-    err_border, err_tileedge, err_inner = 0, 0, 0
+    err_border, err_inner = 0, 0
     fp_rec, fn_rec = [], []
     per_file = collections.Counter()
     for fold in range(5):

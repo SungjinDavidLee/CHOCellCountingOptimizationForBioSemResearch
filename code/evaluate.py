@@ -6,11 +6,10 @@
 Dice / mIoU / 인스턴스 F1@IoU0.5 를 주 지표로 쓴다.
 """
 import os, sys, pathlib
-import pathlib
 import numpy as np
 import cv2
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
-from config import IMD, GTD, INST, TILE, UPSCALE, IMGSZ, tile_origins
+from config import IMD, INST, TILE, UPSCALE, IMGSZ, tile_origins
 
 
 def predict_image(model, img, conf, iou_nms, tta=False, device=0, min_area=150):

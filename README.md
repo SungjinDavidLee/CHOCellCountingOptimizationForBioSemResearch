@@ -168,7 +168,26 @@ python code/make_figures.py --lang en
 python code/make_report.py
 ```
 
-경로 상수는 `code/config.py` 에 모여 있다.
+경로 상수는 `code/config.py` 에 모여 있다. 다른 위치에서 쓰려면 `CHO_ROOT` 를 지정한다:
+
+```bash
+export CHO_ROOT=/path/to/workspace   # $CHO_ROOT/dataset/{images,ground_truth} 기대
+```
+
+### 테스트
+
+```bash
+pytest -q tests/                  # 또는 pytest 없이
+python tests/test_pipeline.py
+```
+
+12개 불변식을 검증한다 — 경로 이식성, 전 모듈 import 가능 여부, pyflakes 정적 검사,
+타일 격자 기하, fold 분할 무결성, 성능표와 원시 JSON 의 일치, nested ≤ oracle,
+지연시간 정합(FP16 ≤ FP32), GT 채움 결과(743 세포 / 53.8 px / 2.14 %),
+GT 가 외곽선인지, calibration 세트 규격.
+
+데이터가 없는 클론 직후에는 데이터 의존 테스트가 자동으로 skip 되고
+이식성·정적 검사만 돈다(8 passed, 3 skipped).
 
 ---
 
