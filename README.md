@@ -10,6 +10,8 @@ for Embedding in Low-Power AIoT Devices"*, Appl. Sci. 2026, 16, 357.
 
 참고 논문 저장소: https://github.com/SungjinDavidLee/Cell-Segmentation-and-Counting
 
+사용 데이터셋: https://bbbc.broadinstitute.org/BBBC030 
+
 ---
 
 ## 핵심 결과
