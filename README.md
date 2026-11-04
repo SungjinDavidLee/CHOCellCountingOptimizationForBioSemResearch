@@ -200,18 +200,77 @@ GT 가 외곽선인지, calibration 세트 규격.
 
 ---
 
+## 적용 예시 (segmentation / counting)
+
+모든 예시는 **해당 영상을 학습에 쓰지 않은 fold 모델**로 추론한 결과임.
+(학습에 쓴 모델로 그린 그림은 성능을 과대 표현하므로 사용하지 않음)
+
+색상 규칙: 🟢 GT · 🟠 TP(매칭된 예측) · 🔴 FP(오검출) · 🟣 FN(미검출)
+
+### 모델 비교 — 같은 영상, 6종
+
+세포 밀도 저/중/고 3장과, 실제로 오차가 발생한 2장을 함께 수록함.
+성공 사례만 보이면 실제 성능을 오해하게 되므로 실패 사례를 같이 둠.
+
+| 영상 | GT | 결과 |
+|---|---:|---|
+| `cho55` (저밀도) | 7 | [grid_cho55.jpg](figures/examples/grid_cho55.jpg) — 6종 중 5종 정확, yolo11m 만 +1 |
+| `cho34` (중밀도) | 12 | [grid_cho34.jpg](figures/examples/grid_cho34.jpg) — **6종 전부 정확** |
+| `cho51` (고밀도) | 20 | [grid_cho51.jpg](figures/examples/grid_cho51.jpg) — **6종 전부 정확** |
+| `cho40` (오차 사례) | 18 | [grid_cho40.jpg](figures/examples/grid_cho40.jpg) — 전 모델 +1~+2 과대계수 |
+| `cho57` (최대 오차) | 15 | [grid_cho57.jpg](figures/examples/grid_cho57.jpg) — 전 모델 FP 2~4 + FN 1 |
+
+![모델 비교 cho34](figures/examples/grid_cho34.jpg)
+
+### 모델별 개별 결과
+
+`figures/examples/per-model/<모델>_<영상>.jpg` — 6종 × 5영상 = 30장.
+각 이미지에 GT/예측 개수와 TP·FP·FN 이 함께 표기됨.
+
+5영상 합계 (GT 72 세포 기준):
+
+| 모델 | 예측 합 | TP | FP | FN | 순오차 |
+|---|---:|---:|---:|---:|---:|
+| yolov8x-seg | 74 | 71 | 3 | 1 | +2 |
+| yolov8n-seg | 75 | 71 | 4 | 1 | +3 |
+| yolo11m-seg | 76 | 71 | 5 | 1 | +4 |
+| yolov8m-seg | 76 | 71 | 5 | 1 | +4 |
+| yolo11s-seg | 76 | 71 | 5 | 1 | +4 |
+| yolo11n-seg | 77 | 71 | 6 | 1 | +5 |
+
+> 이 5장은 오차 사례를 **의도적으로 포함**한 표본이므로, 전체 성능을 대표하지
+> 않음. 교차검증 수치는 위 성능표를 볼 것.
+
+### 파이프라인 단계별
+
+[pipeline_cho34.jpg](figures/examples/pipeline_cho34.jpg) — 원본 → 512 타일 3×3
+분할 → 인스턴스 마스크 → 계수(중심점 번호) 4단계.
+
+![파이프라인](figures/examples/pipeline_cho34.jpg)
+
+### 오차 사례 확대
+
+[errors_yolov8x-seg.jpg](figures/examples/errors_yolov8x-seg.jpg) — FP/FN 각 10건
+을 확대한 크롭. FP 의 국소 텍스처가 실제 세포와 구분되지 않는 것을 육안으로
+확인할 수 있음.
+
+재생성: `python code/make_examples.py` → `python code/optimize_examples.py`
+
+---
+
 
 ## 저장소 구조
 
 | 경로 | 내용 |
 |---|---|
-| `code/` | 전처리·학습·평가·앙상블·그림·보고서 스크립트 17개 |
+| `code/` | 전처리·학습·평가·앙상블·그림·예시·보고서 스크립트 19개 |
 | `docs/REPORT.txt` | 전체 분석 보고서 |
 | `docs/SINGLE_MODEL_TABLE.txt` | 단독 모델 성능표 (원문) |
 | `results/*.json` | 원시 측정 결과 (스윕 전조합, fold별 per-file 기록 포함) |
 | `results/montage_*.png` | FP/FN 오차 사례 크롭 |
 | `figures/en/` | 저널 투고용 영문 그림 6종 |
 | `figures/ko/` | 한글 그림 6종 |
+| `figures/examples/` | 적용 예시 — 모델 비교 격자 5장, 개별 30장, 파이프라인, 오차 사례 |
 
 데이터셋 원본(이미지·GT)은 라이선스 확인 전까지 포함하지 않았음.
 
