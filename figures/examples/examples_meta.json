@@ -55,6 +55,61 @@
   "conf": 0.55
  },
  {
+  "model": "yolov8s-seg",
+  "file": "cho55.png",
+  "fold": 4,
+  "n_gt": 7,
+  "n_pred": 7,
+  "tp": 7,
+  "fp": 0,
+  "fn": 0,
+  "conf": 0.65
+ },
+ {
+  "model": "yolov8s-seg",
+  "file": "cho34.png",
+  "fold": 3,
+  "n_gt": 12,
+  "n_pred": 12,
+  "tp": 12,
+  "fp": 0,
+  "fn": 0,
+  "conf": 0.65
+ },
+ {
+  "model": "yolov8s-seg",
+  "file": "cho51.png",
+  "fold": 0,
+  "n_gt": 20,
+  "n_pred": 20,
+  "tp": 20,
+  "fp": 0,
+  "fn": 0,
+  "conf": 0.65
+ },
+ {
+  "model": "yolov8s-seg",
+  "file": "cho57.png",
+  "fold": 1,
+  "n_gt": 15,
+  "n_pred": 17,
+  "tp": 14,
+  "fp": 3,
+  "fn": 1,
+  "conf": 0.65
+ },
+ {
+  "model": "yolov8s-seg",
+  "file": "cho40.png",
+  "fold": 4,
+  "n_gt": 18,
+  "n_pred": 19,
+  "tp": 18,
+  "fp": 1,
+  "fn": 0,
+  "conf": 0.65
+ },
+ {
   "model": "yolov8m-seg",
   "file": "cho55.png",
   "fold": 4,
@@ -100,6 +155,61 @@
  },
  {
   "model": "yolov8m-seg",
+  "file": "cho40.png",
+  "fold": 4,
+  "n_gt": 18,
+  "n_pred": 20,
+  "tp": 18,
+  "fp": 2,
+  "fn": 0,
+  "conf": 0.65
+ },
+ {
+  "model": "yolov8l-seg",
+  "file": "cho55.png",
+  "fold": 4,
+  "n_gt": 7,
+  "n_pred": 7,
+  "tp": 7,
+  "fp": 0,
+  "fn": 0,
+  "conf": 0.65
+ },
+ {
+  "model": "yolov8l-seg",
+  "file": "cho34.png",
+  "fold": 3,
+  "n_gt": 12,
+  "n_pred": 12,
+  "tp": 12,
+  "fp": 0,
+  "fn": 0,
+  "conf": 0.65
+ },
+ {
+  "model": "yolov8l-seg",
+  "file": "cho51.png",
+  "fold": 0,
+  "n_gt": 20,
+  "n_pred": 20,
+  "tp": 20,
+  "fp": 0,
+  "fn": 0,
+  "conf": 0.65
+ },
+ {
+  "model": "yolov8l-seg",
+  "file": "cho57.png",
+  "fold": 1,
+  "n_gt": 15,
+  "n_pred": 17,
+  "tp": 14,
+  "fp": 3,
+  "fn": 1,
+  "conf": 0.65
+ },
+ {
+  "model": "yolov8l-seg",
   "file": "cho40.png",
   "fold": 4,
   "n_gt": 18,
@@ -283,7 +393,7 @@
   "tp": 7,
   "fp": 1,
   "fn": 0,
-  "conf": 0.55
+  "conf": 0.65
  },
  {
   "model": "yolo11m-seg",
@@ -294,7 +404,7 @@
   "tp": 12,
   "fp": 0,
   "fn": 0,
-  "conf": 0.55
+  "conf": 0.65
  },
  {
   "model": "yolo11m-seg",
@@ -305,7 +415,7 @@
   "tp": 20,
   "fp": 0,
   "fn": 0,
-  "conf": 0.55
+  "conf": 0.65
  },
  {
   "model": "yolo11m-seg",
@@ -316,7 +426,7 @@
   "tp": 14,
   "fp": 3,
   "fn": 1,
-  "conf": 0.55
+  "conf": 0.65
  },
  {
   "model": "yolo11m-seg",
@@ -327,6 +437,116 @@
   "tp": 18,
   "fp": 1,
   "fn": 0,
+  "conf": 0.65
+ },
+ {
+  "model": "yolo11l-seg",
+  "file": "cho55.png",
+  "fold": 4,
+  "n_gt": 7,
+  "n_pred": 7,
+  "tp": 6,
+  "fp": 1,
+  "fn": 1,
   "conf": 0.55
+ },
+ {
+  "model": "yolo11l-seg",
+  "file": "cho34.png",
+  "fold": 3,
+  "n_gt": 12,
+  "n_pred": 12,
+  "tp": 12,
+  "fp": 0,
+  "fn": 0,
+  "conf": 0.55
+ },
+ {
+  "model": "yolo11l-seg",
+  "file": "cho51.png",
+  "fold": 0,
+  "n_gt": 20,
+  "n_pred": 20,
+  "tp": 20,
+  "fp": 0,
+  "fn": 0,
+  "conf": 0.55
+ },
+ {
+  "model": "yolo11l-seg",
+  "file": "cho57.png",
+  "fold": 1,
+  "n_gt": 15,
+  "n_pred": 17,
+  "tp": 14,
+  "fp": 3,
+  "fn": 1,
+  "conf": 0.55
+ },
+ {
+  "model": "yolo11l-seg",
+  "file": "cho40.png",
+  "fold": 4,
+  "n_gt": 18,
+  "n_pred": 21,
+  "tp": 18,
+  "fp": 3,
+  "fn": 0,
+  "conf": 0.55
+ },
+ {
+  "model": "yolo11x-seg",
+  "file": "cho55.png",
+  "fold": 4,
+  "n_gt": 7,
+  "n_pred": 7,
+  "tp": 7,
+  "fp": 0,
+  "fn": 0,
+  "conf": 0.65
+ },
+ {
+  "model": "yolo11x-seg",
+  "file": "cho34.png",
+  "fold": 3,
+  "n_gt": 12,
+  "n_pred": 12,
+  "tp": 12,
+  "fp": 0,
+  "fn": 0,
+  "conf": 0.65
+ },
+ {
+  "model": "yolo11x-seg",
+  "file": "cho51.png",
+  "fold": 0,
+  "n_gt": 20,
+  "n_pred": 20,
+  "tp": 20,
+  "fp": 0,
+  "fn": 0,
+  "conf": 0.65
+ },
+ {
+  "model": "yolo11x-seg",
+  "file": "cho57.png",
+  "fold": 1,
+  "n_gt": 15,
+  "n_pred": 17,
+  "tp": 14,
+  "fp": 3,
+  "fn": 1,
+  "conf": 0.65
+ },
+ {
+  "model": "yolo11x-seg",
+  "file": "cho40.png",
+  "fold": 4,
+  "n_gt": 18,
+  "n_pred": 19,
+  "tp": 18,
+  "fp": 1,
+  "fn": 0,
+  "conf": 0.65
  }
 ]

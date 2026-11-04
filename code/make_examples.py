@@ -26,15 +26,22 @@ TP_COLOR = (0, 200, 255)    # 주황 = 매칭된 예측
 FN_COLOR = (255, 0, 255)    # 자홍 = 미검출
 FP_COLOR = (0, 0, 255)      # 빨강 = 오검출
 
-# 성능표 기준 주요 모델 + 권장 conf (README 와 동일)
+# 10종 전부 + 권장 conf (nested CV 로 선택된 값, README 성능표와 동일)
 MODELS = [
-    ("yolov8n-seg", 0.55, "3.3M · 엣지 권장"),
+    ("yolov8n-seg", 0.55, "3.3M"),
+    ("yolov8s-seg", 0.65, "11.8M"),
     ("yolov8m-seg", 0.65, "27.2M"),
-    ("yolov8x-seg", 0.65, "71.8M · 단독 최고"),
-    ("yolo11n-seg", 0.65, "2.8M · 최소"),
+    ("yolov8l-seg", 0.65, "45.9M"),
+    ("yolov8x-seg", 0.65, "71.8M · 최고 0.9756"),
+    ("yolo11n-seg", 0.65, "2.8M · 최소 · 0.9716"),
     ("yolo11s-seg", 0.65, "10.1M"),
-    ("yolo11m-seg", 0.55, "22.4M"),
+    ("yolo11m-seg", 0.65, "22.4M"),
+    ("yolo11l-seg", 0.55, "27.6M"),
+    ("yolo11x-seg", 0.65, "62.1M"),
 ]
+
+# 격자는 10종이므로 5열 x 2행
+GRID_COLS = 5
 
 
 def fold_of(fname):
@@ -167,7 +174,7 @@ def fig_per_model(files):
     return rows
 
 
-def fig_grid(fname, cols=3):
+def fig_grid(fname, cols=GRID_COLS):
     """한 영상을 여러 모델로 비교한 격자."""
     tiles = []
     for model, conf, note in MODELS:
@@ -182,7 +189,7 @@ def fig_grid(fname, cols=3):
         label(vis, f"pred {r['n_pred']} / GT {r['n_gt']}  ({err:+d})",
               org=(12, 76), scale=0.9,
               color=(120, 255, 120) if err == 0 else (120, 220, 255))
-        tiles.append(cv2.resize(vis, (688, 516)))
+        tiles.append(cv2.resize(vis, (550, 413)))
     if not tiles:
         return None
     while len(tiles) % cols:

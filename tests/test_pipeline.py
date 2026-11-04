@@ -72,6 +72,26 @@ def test_root_follows_env():
     assert dflt == "/home/user/CHO_CELL_Project", dflt
 
 
+def test_repo_code_matches_workspace():
+    """저장소 code/ 와 작업 디렉터리 work/ 의 사본이 갈라지지 않아야 한다.
+
+    실제로 발생한 사고: 저장소 클론에서만 버그를 고치고 work/ 에 반영하지
+    않았더니, 다음 턴에 work/ 에서 복사하면서 수정이 되돌아갔다(regression).
+    같은 파일을 두 곳에 두는 구조 자체의 위험이므로 테스트로 막는다.
+    """
+    work = WORK
+    if not work.is_dir():
+        raise Skip("work/ 없음 (클론 전용 환경)")
+    diverged = []
+    for p in sorted(CODE.glob("*.py")):
+        w = work / p.name
+        if w.exists() and w.read_text() != p.read_text():
+            diverged.append(p.name)
+    assert not diverged, (
+        "저장소와 work/ 사본이 다름 — 한쪽만 고치면 되돌아간다: "
+        + ", ".join(diverged))
+
+
 def test_no_hardcoded_paths():
     """ROOT 하드코딩은 config.py 기본값 한 곳만 허용 (클론 이식성)."""
     bad = [p.name for p in CODE.glob("*.py")

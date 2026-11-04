@@ -18,7 +18,8 @@ SRC = pathlib.Path(sys.argv[1] if len(sys.argv) > 1
                    else f"{ROOT}/work/figures/examples")
 DST = pathlib.Path(sys.argv[2] if len(sys.argv) > 2
                    else os.environ.get("EXAMPLES_OUT", "/tmp/examples_opt"))
-MAXW = {"grid": 1600, "pipeline": 1400, "errors": 1300, "default": 1100}
+# grid 는 5열 x 2행이라 셀당 폭이 좁다 → 넉넉히 둬야 윤곽이 보인다
+MAXW = {"grid": 2400, "pipeline": 1400, "errors": 1300, "default": 1100}
 QUALITY = 95
 
 

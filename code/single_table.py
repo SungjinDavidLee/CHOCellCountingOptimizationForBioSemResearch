@@ -58,10 +58,17 @@ def main():
     A("단독 모델 성능표 — YOLOv8 / YOLOv11 seg 10종 (앙상블 제외)")
     A("=" * 100)
     A("")
+    nA = sum(1 for r in rows if r["grade"] == "A")
+    nB = len(rows) - nA
     A("증거 등급  A = 중첩 5-fold 교차검증 (완전 홀드아웃, 세포 743개 전부 평가)")
-    A("           B = fold0 단일 스크리닝 (후처리 conf 를 같은 fold 에서 선택 = 상한, 세포 155개)")
-    A("           등급이 다른 행을 직접 비교하면 안 된다. B 는 체계적으로 낙관적이다.")
-    A("           (실측 격차: yolo11s B 0.9806 vs A 0.9690, 1.2 %p)")
+    if nB:
+        A("           B = fold0 단일 스크리닝 (후처리 conf 를 같은 fold 에서 선택 = 상한, 세포 155개)")
+        A("           등급이 다른 행을 직접 비교하면 안 된다. B 는 체계적으로 낙관적이다.")
+        A("           (실측 격차: yolo11s B 0.9806 vs A 0.9690, 1.2 %p)")
+    else:
+        A(f"           전 {nA}종 모두 A등급 — 동일 조건에서 직접 비교 가능.")
+        A("           (참고: fold0 단일 스크리닝 값은 체계적으로 낙관적이었음.")
+        A("            실측 격차 yolo11s 스크리닝 0.9806 vs 교차검증 0.9690, 1.2 %p)")
     A("")
     hdr = (f"{'모델':14s} {'등급':4s} {'파라미터':>9s} {'ckpt':>7s} "
            f"{'계수정확도':>16s} {'Dice':>7s} {'mIoU':>7s} {'instF1':>7s} {'MAE':>6s} {'conf':>5s}")
@@ -74,7 +81,8 @@ def main():
           f"{r['ckpt_mb']:6.1f}M {acc:>16s} {r['dice']:7.4f} {r['miou']:7.4f} "
           f"{r['f1']:7.4f} {r['mae']:6.3f} {r['conf']:5.2f}")
     A("")
-    A("A등급 4종 상세 (3가지 선택 방식 비교)")
+    nA = sum(1 for r in rows if r["grade"] == "A")
+    A(f"A등급 {nA}종 상세 (3가지 선택 방식 비교)")
     A("-" * 100)
     A(f"{'모델':14s} {'fixed':>8s} {'nested':>18s} {'oracle':>8s}  {'95% CI (nested)':>20s}")
     for r in rows:
