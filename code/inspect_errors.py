@@ -5,14 +5,11 @@ FP confidence 중간값 0.805 (높음) -> 모델이 확신하는 검출이 GT �
 크롭을 눈으로 확인하고, 추가로 정량 지표(국소 대비/텍스처)를 GT 세포와 비교한다.
 """
 import os, sys, pathlib, json
-import pathlib
 import numpy as np, cv2
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 from config import ROOT, IMD, GTD, INST
 
-E = json.load(open(f"{ROOT}/work/error_analysis.json"))
 OUT = f"{ROOT}/work/preview/errors"
-os.makedirs(OUT, exist_ok=True)
 R = 70
 
 
@@ -44,6 +41,8 @@ def stats(f, cx, cy, gi, img):
 
 
 def main():
+    E = json.load(open(f"{ROOT}/work/error_analysis.json"))
+    os.makedirs(OUT, exist_ok=True)
     rows = []
     for kind in ("fp", "fn"):
         for i, r in enumerate(sorted(E[kind], key=lambda x: -x.get("score", 0))):
