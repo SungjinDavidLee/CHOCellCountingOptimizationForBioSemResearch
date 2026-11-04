@@ -1,0 +1,102 @@
+{
+ "yolov8n-seg": {
+  "gpu_ms": 8.04,
+  "gpu_fp16_ms": 7.18,
+  "cpu_ms": 86.23,
+  "gpu_p5": 8.0,
+  "gpu_p95": 8.2,
+  "params": 3263811,
+  "ckpt_mb": 6.8,
+  "tiles": 9
+ },
+ "yolov8s-seg": {
+  "gpu_ms": 9.59,
+  "gpu_fp16_ms": 7.77,
+  "cpu_ms": 210.83,
+  "gpu_p5": 9.51,
+  "gpu_p95": 9.73,
+  "params": 11790483,
+  "ckpt_mb": 23.9,
+  "tiles": 9
+ },
+ "yolov8m-seg": {
+  "gpu_ms": 17.05,
+  "gpu_fp16_ms": 11.32,
+  "cpu_ms": 435.98,
+  "gpu_p5": 16.97,
+  "gpu_p95": 17.14,
+  "params": 27240227,
+  "ckpt_mb": 54.8,
+  "tiles": 9
+ },
+ "yolov8l-seg": {
+  "gpu_ms": 23.77,
+  "gpu_fp16_ms": 15.19,
+  "cpu_ms": 781.06,
+  "gpu_p5": 23.67,
+  "gpu_p95": 25.55,
+  "params": 45936819,
+  "ckpt_mb": 92.3,
+  "tiles": 9
+ },
+ "yolov8x-seg": {
+  "gpu_ms": 39.38,
+  "gpu_fp16_ms": 21.26,
+  "cpu_ms": 1168.56,
+  "gpu_p5": 39.28,
+  "gpu_p95": 39.62,
+  "params": 71751811,
+  "ckpt_mb": 144.0,
+  "tiles": 9
+ },
+ "yolo11n-seg": {
+  "gpu_ms": 7.47,
+  "gpu_fp16_ms": 6.63,
+  "cpu_ms": 75.33,
+  "gpu_p5": 7.42,
+  "gpu_p95": 7.69,
+  "params": 2842803,
+  "ckpt_mb": 6.0,
+  "tiles": 9
+ },
+ "yolo11s-seg": {
+  "gpu_ms": 9.74,
+  "gpu_fp16_ms": 7.92,
+  "cpu_ms": 194.39,
+  "gpu_p5": 9.64,
+  "gpu_p95": 10.79,
+  "params": 10082675,
+  "ckpt_mb": 20.5,
+  "tiles": 9
+ },
+ "yolo11m-seg": {
+  "gpu_ms": 17.7,
+  "gpu_fp16_ms": 11.78,
+  "cpu_ms": 562.74,
+  "gpu_p5": 17.61,
+  "gpu_p95": 18.69,
+  "params": 22359987,
+  "ckpt_mb": 45.2,
+  "tiles": 9
+ },
+ "yolo11l-seg": {
+  "gpu_ms": 20.61,
+  "gpu_fp16_ms": 13.92,
+  "cpu_ms": 668.91,
+  "gpu_p5": 20.56,
+  "gpu_p95": 21.54,
+  "params": 27617459,
+  "ckpt_mb": 55.9,
+  "tiles": 9
+ },
+ "yolo11x-seg": {
+  "gpu_ms": 35.4,
+  "gpu_fp16_ms": 21.51,
+  "cpu_ms": 1283.89,
+  "gpu_p5": 35.27,
+  "gpu_p95": 36.71,
+  "params": 62051411,
+  "ckpt_mb": 124.8,
+  "tiles": 9
+ }
+}

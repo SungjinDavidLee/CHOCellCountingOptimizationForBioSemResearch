@@ -1,0 +1,17 @@
+# 데이터셋 원본 (라이선스 확인 전)
+dataset/
+*.npy
+
+# 가중치는 GitHub Releases 로 배포 (git 본문 제외)
+*.pt
+runs/
+
+# calibration 묶음 (Releases)
+calib_tiles/
+*.zip
+
+# 캐시
+__pycache__/
+*.py[cod]
+.venv/
+.ipynb_checkpoints/
