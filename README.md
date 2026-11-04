@@ -48,8 +48,6 @@ for Embedding in Low-Power AIoT Devices"*, Appl. Sci. 2026, 16, 357.
 모든 모델 동일 조건: fold 분할 / 300 epoch / patience 80 / 동일 증강 / 유효배치 16 /
 imgsz 512 / AdamW lr0 1e-3 cosine.
 
-증거 등급을 반드시 구분. **등급이 다른 행을 직접 비교하면 안 됨.**
-
 - **A** = 중첩 5-fold 교차검증. 세포 743개 전부가 홀드아웃에 포함. 후처리 conf 도
   평가 fold 를 보지 않고 선택 → 완전 홀드아웃.
 - **B** = fold0 단일 스크리닝. 후처리 conf 를 같은 fold 에서 선택 → **체계적으로 낙관적**.
@@ -170,7 +168,7 @@ python tests/test_pipeline.py
 GT 가 외곽선인지, calibration 세트 규격.
 
 데이터가 없는 클론 직후에는 데이터 의존 테스트가 자동으로 skip 되고
-이식성·정적 검사만 돈다(8 passed, 3 skipped).
+이식성, 정적 검사만 돈다(8 passed, 3 skipped).
 
 ---
 
