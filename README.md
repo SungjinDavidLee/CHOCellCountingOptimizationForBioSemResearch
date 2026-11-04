@@ -282,6 +282,5 @@ GT 가 외곽선인지, calibration 세트 규격.
 ## 인용
 
 ```
-이성진 (Sungjin Lee), 순천향대학교 스마트자동차학과
-교신저자: sungjinlee@sch.ac.kr
+이성진 (Sungjin Lee), 순천향대학교 스마트자동차학과, sungjinlee@sch.ac.kr
 ```
