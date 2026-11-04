@@ -201,25 +201,6 @@ GT 가 외곽선인지, calibration 세트 규격.
 
 ---
 
-## 효과가 없었던 기법 (그대로 기록)
-
-| 기법 | 결과 |
-|---|---|
-| distance-transform watershed (Tw) | **역효과** — 전 모델 / 전 conf |
-| D4 TTA | **역효과** — Dice 0.9487 → 0.9390 |
-| 면적 하한 필터 | **역효과** — 진짜 세포 제거 |
-| conf 격자 확장 (0.65 → 0.85) | 효과 없음 — 최적이 격자 내부 |
-| 대형 단일 모델 (yolov8x) | 성공 — 0.9756 |
-| 다중 모델 합의 투표 앙상블 | 성공 — 0.9768 |
-
-### ultralytics `augment=True` 가 segment 에서 no-op
-
-8.4.150 에서 `predict(augment=True)` 의 검출 수와 confidence 가 `augment=False` 와
-**완전히 동일**했음. 확인법은 두 번 호출해 `sorted(boxes.conf)` 비교.
-그래서 D4(회전4 × 반전2)를 `code/tta.py` 에 직접 구현했으나, 회전/반전 증강으로
-학습한 모델에는 이득이 없었음.
-
----
 
 ## 저장소 구조
 
