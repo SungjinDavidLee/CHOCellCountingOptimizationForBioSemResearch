@@ -2,11 +2,13 @@
 
 무염색(label-free) 명시야 CHO 세포 이미지에 대한 **YOLOv8 / YOLOv11 세그멘테이션 및
 세포 계수** 파이프라인. 10종 모델을 동일 조건으로 비교하고, 중첩 5-fold 교차검증으로
-계수정확도 97% 목표를 검증했다.
+계수정확도 97% 목표를 검증했음.
 
 참고 논문: G. Park, J. Park, S. Lee, *"Optimal Cell Segmentation and Counting Strategy
 for Embedding in Low-Power AIoT Devices"*, Appl. Sci. 2026, 16, 357.
 (본 저장소는 해당 논문의 CHO 검증 데이터셋에 YOLO 계열을 적용한 후속 작업)
+
+참고 논문 저장소: https://github.com/SungjinDavidLee/Cell-Segmentation-and-Counting
 
 ---
 
@@ -39,25 +41,6 @@ for Embedding in Low-Power AIoT Devices"*, Appl. Sci. 2026, 16, 357.
 | 세포–배경 콘트라스트 | 약 6 계조 → 무염색 저콘트라스트 명시야 |
 | 접촉·겹침 세포 | **0 건** |
 
-### ⚠ GT 주석 형식 — 가장 중요한 전처리
-
-`ground_truth/*.png` 는 **채워진 영역 마스크가 아니라 세포 외곽선**(두께 약 1.19 px)이다.
-이를 모르고 그대로 쓰면 세포 크기를 3배 과소추정하고 타일/입력해상도 설계가 전부 틀어진다.
-
-판정 근거 (실측):
-
-| 지표 | 윤곽선 그대로 | 채운 후 |
-|---|---|---|
-| 등가직경 중간값 | 16.0 px | **53.8 px** |
-| 전경 비율 | 0.2 % | **2.14 %** |
-| ring/filled 면적비 | 0.089 (≪1 → 윤곽선) | — |
-
-증상으로 역추적하는 법: 예측 centroid 는 GT 와 완벽히 일치하는데 **마스크 면적만 ~10배**
-크고 Dice 가 0.1 대, 인스턴스 F1 이 0 이면서 **계수만 정상**이면 GT 가 윤곽선이다.
-
-윤곽이 끊긴 세포 20 개(2.7%)는 `code/gt_fill.py` 의 단계적 보정
-(flood-fill → dilate-fill-erode → convexHull)으로 처리했고, 미채움 0 건을 검증했다.
-
 ---
 
 ## 단독 모델 성능표
@@ -65,7 +48,7 @@ for Embedding in Low-Power AIoT Devices"*, Appl. Sci. 2026, 16, 357.
 모든 모델 동일 조건: fold 분할 / 300 epoch / patience 80 / 동일 증강 / 유효배치 16 /
 imgsz 512 / AdamW lr0 1e-3 cosine.
 
-증거 등급을 반드시 구분한다. **등급이 다른 행을 직접 비교하면 안 된다.**
+증거 등급을 반드시 구분. **등급이 다른 행을 직접 비교하면 안 됨.**
 
 - **A** = 중첩 5-fold 교차검증. 세포 743개 전부가 홀드아웃에 포함. 후처리 conf 도
   평가 fold 를 보지 않고 선택 → 완전 홀드아웃.
@@ -95,7 +78,7 @@ imgsz 512 / AdamW lr0 1e-3 cosine.
 | yolo11s-seg | 0.9635 | **0.9690 ± 0.0052** | 0.9703 | [0.9644, 0.9735] |
 
 - `fixed` — conf 를 fold0 에서 골라 전 fold 에 적용. fold0 에 과적합된 값이 다른 fold 에서
-  나쁠 수 있다 (v8m conf=0.25 → 0.9551 로 하락).
+  나쁠 수 있음 (v8m conf=0.25 → 0.9551 로 하락).
 - `nested` — fold k 의 conf 를 **k 를 제외한 4개 fold** 에서만 선택. ← **헤드라인 수치**
 - `oracle` — 각 fold 자기 자신에서 선택. 낙관 편향, 상한으로만 참고.
 
@@ -103,17 +86,17 @@ imgsz 512 / AdamW lr0 1e-3 cosine.
 
 ### 모델 크기와 성능
 
-**거의 무관하다.** 3.3 M(yolov8n)이 71.8 M(yolov8x)과 0.65 %p 차이. 세포가 크고(54 px)
-희소하고(장당 12개) 균일해 과제 난이도가 낮다. 엣지 배포라면 nano 계열이 압도적으로 유리하다.
+**거의 무관함.** 3.3 M(yolov8n)이 71.8 M(yolov8x)과 0.65 %p 차이. 세포가 크고(54 px)
+희소하고(장당 12개) 균일해 과제 난이도가 낮음. 엣지 배포라면 nano 계열이 압도적으로 유리함.
 
-지표별 승자도 다르다: 계수 최고 yolov8x, Dice 최고 yolov8l(B등급), instF1 최고 yolo11m(B등급).
+지표별 승자도 상이: 계수 최고 yolov8x, Dice 최고 yolov8l(B등급), instF1 최고 yolo11m(B등급).
 
 ---
 
 ## 추론 지연시간
 
 입력 1장(1376×1032) → 512 타일 9개 일괄 추론. warmup 5회 후 20회 측정, 중간값.
-**개발 머신(RTX 5090 / x86 CPU) 기준이며 엣지 실기 수치가 아니다.**
+**개발 머신(RTX 5090 / x86 CPU) 기준이며 엣지 실기 수치가 아님.**
 
 | 모델 | ckpt | GPU FP32 | GPU FP16 | CPU FP32 |
 |---|---:|---|---|---|
@@ -168,7 +151,7 @@ python code/make_figures.py --lang en
 python code/make_report.py
 ```
 
-경로 상수는 `code/config.py` 에 모여 있다. 다른 위치에서 쓰려면 `CHO_ROOT` 를 지정한다:
+경로 상수는 `code/config.py` 에 모여 있음. 다른 위치에서 쓰려면 `CHO_ROOT` 를 지정:
 
 ```bash
 export CHO_ROOT=/path/to/workspace   # $CHO_ROOT/dataset/{images,ground_truth} 기대
@@ -181,7 +164,7 @@ pytest -q tests/                  # 또는 pytest 없이
 python tests/test_pipeline.py
 ```
 
-12개 불변식을 검증한다 — 경로 이식성, 전 모듈 import 가능 여부, pyflakes 정적 검사,
+12개 불변식을 검증 — 경로 이식성, 전 모듈 import 가능 여부, pyflakes 정적 검사,
 타일 격자 기하, fold 분할 무결성, 성능표와 원시 JSON 의 일치, nested ≤ oracle,
 지연시간 정합(FP16 ≤ FP32), GT 채움 결과(743 세포 / 53.8 px / 2.14 %),
 GT 가 외곽선인지, calibration 세트 규격.
@@ -193,7 +176,7 @@ GT 가 외곽선인지, calibration 세트 규격.
 
 ## 학습 가중치
 
-파일 크기(최대 144 MB, 총 1.4 GB) 때문에 git 본문이 아니라 **GitHub Releases** 에 올렸다.
+파일 크기(최대 144 MB, 총 1.4 GB) 때문에 git 본문이 아니라 **GitHub Releases** 에 올렸음.
 
 - 태그 `weights-v1` → [Releases](../../releases) 참고
 - 명명 규칙 `<모델>_f<fold>.pt` (예: `yolov8x-seg_f0.pt`)
@@ -214,7 +197,7 @@ GT 가 외곽선인지, calibration 세트 규격.
 | 권장 conf | 모델별 상이, 위 표 `conf` 열 참조 (0.25 ~ 0.65) |
 | NMS IoU | 0.5 |
 | 후처리 | 타일 간 마스크 IoU 병합 (IoU ≥ 0.3 또는 포함비 ≥ 0.6 → 중복 제거) |
-| watershed | **사용하지 않음** (아래 참조) |
+| watershed | **사용하지 않음** |
 
 ---
 
@@ -229,21 +212,12 @@ GT 가 외곽선인지, calibration 세트 규격.
 | 대형 단일 모델 (yolov8x) | 성공 — 0.9756 |
 | 다중 모델 합의 투표 앙상블 | 성공 — 0.9768 |
 
-### 참고 논문의 watershed Tw=0.65 는 이 데이터에 적용하면 안 된다
-
-논문은 CHO 데이터에서 "계수 성능이 더 넓은 Tw 범위에서 안정적으로 유지된다"고 적었다.
-실측한 원인은 **강건성이 아니라 분리할 접촉 세포가 애초에 0 건**이기 때문이다.
-GT 에서 Tw 0.4~0.9 전 구간을 훑어도 추가 분리되는 인스턴스가 0 개였다.
-
-따라서 이 데이터셋에서 watershed 단계는 불필요하거나 유해하며(과분할만 유발),
-논문의 Tw=0.65 최적값은 **WBC 데이터 고유 결과**로 한정해 서술하는 것이 정확하다.
-
 ### ultralytics `augment=True` 가 segment 에서 no-op
 
 8.4.150 에서 `predict(augment=True)` 의 검출 수와 confidence 가 `augment=False` 와
-**완전히 동일**했다. 확인법은 두 번 호출해 `sorted(boxes.conf)` 비교.
+**완전히 동일**했음. 확인법은 두 번 호출해 `sorted(boxes.conf)` 비교.
 그래서 D4(회전4 × 반전2)를 `code/tta.py` 에 직접 구현했으나, 회전/반전 증강으로
-학습한 모델에는 이득이 없었다.
+학습한 모델에는 이득이 없었음.
 
 ---
 
@@ -258,15 +232,15 @@ GT 에서 Tw 0.4~0.9 전 구간을 훑어도 추가 분리되는 인스턴스가
 **검증되지 않은 것:**
 
 - **독립 배치 일반화** — 단일 배치 60장이므로 다른 날·다른 장비로 촬영한 CHO 데이터에
-  대한 전이는 **측정 불가**. N=1 배치로는 일반화를 주장할 수 없다.
+  대한 전이는 **측정 불가**. N=1 배치로는 일반화를 주장할 수 없음.
 - **엣지 가속기 실기 성능** — DeepX DX-M1 / Jetson / 라즈베리파이 실측 미수행.
-  위 지연시간 표는 개발 머신(RTX 5090, x86 CPU) 수치다.
+  위 지연시간 표는 개발 머신(RTX 5090, x86 CPU) 수치임.
 - **양자화 후 성능** — FP16 / INT8 변환 후 정확도 열화 미측정.
 - **통계적 정밀도** — fold 당 홀드아웃이 12장(약 150 세포). 세포 2~3개 오차가 1.5 %p 를
-  움직인다. 신뢰구간은 fold 수준 부트스트랩(n=5)이므로 넓게 해석해야 한다.
+  움직임. 신뢰구간은 fold 수준 부트스트랩(n=5)이므로 넓게 해석해야 함.
 - **GT 주석 완전성** — FP 23건의 국소 텍스처 지표가 GT 세포와 사실상 동일
   (std 38.2 vs 38.6, Laplacian 398 vs 422). 상당수가 **GT 주석 누락된 실제 세포**로
-  추정되며, 이 경우 측정된 정확도는 모델 성능의 **하한**이다.
+  추정되며, 이 경우 측정된 정확도는 모델 성능의 **하한**임.
   증거: `results/montage_fp.png`, `results/montage_fn.png`
 
 ---
@@ -283,12 +257,12 @@ GT 에서 Tw 0.4~0.9 전 구간을 훑어도 추가 분리되는 인스턴스가
 | `figures/en/` | 저널 투고용 영문 그림 6종 |
 | `figures/ko/` | 한글 그림 6종 |
 
-데이터셋 원본(이미지·GT)은 라이선스 확인 전까지 포함하지 않았다.
+데이터셋 원본(이미지·GT)은 라이선스 확인 전까지 포함하지 않았음.
 
 ## 라이선스
 
 코드: MIT. 가중치는 Ultralytics 사전학습 모델에서 파인튜닝되었으므로
-**AGPL-3.0** 제약을 따른다 (상업적 활용 시 Ultralytics 라이선스 확인 필요).
+**AGPL-3.0** 제약을 따름 (상업적 활용 시 Ultralytics 라이선스 확인 필요).
 
 ## 인용
 
